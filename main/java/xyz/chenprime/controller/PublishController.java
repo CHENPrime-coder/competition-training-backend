@@ -1,0 +1,87 @@
+package xyz.chenprime.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RestController;
+import xyz.chenprime.pojo.Daily;
+import xyz.chenprime.pojo.Plan;
+import xyz.chenprime.service.DailyService;
+import xyz.chenprime.service.PlanService;
+
+import java.text.SimpleDateFormat;
+import java.util.*;
+
+/**
+ * 本控制器讲实现日报，计划相关接口
+ */
+@RestController
+public class PublishController {
+
+    private static final String PLAN_TYPE="周计划月计划学期计划";
+
+    @Autowired
+    DailyService dailyService;
+
+    /**
+     * 日报
+     */
+    //获取全部日报(今天的和昨天的)
+    @GetMapping("/daily")
+    public List<Daily> getAllDaily(){
+        return dailyService.getAllDaily();
+    }
+
+    //获取指定用户的所有日报
+    @GetMapping("/daily/{username}")
+    public List<Daily> getDailyByUid(@PathVariable("username")String username){
+        return dailyService.getDailyByUserName(username);
+    }
+
+    //发布日报
+    @PostMapping("/daily")
+    public Map<String,String> publishDaily(Daily daily){
+        Map<String,String> result = new HashMap<>();
+
+        if(dailyService.reportDaily(daily)){
+            result.put("code","200");
+        }else {
+            result.put("code","405");
+        }
+
+        return result;
+    }
+
+    /**
+     * 计划
+     */
+
+    @Autowired
+    PlanService planService;
+
+    //获取指定用户的所有计划
+    @GetMapping("/plan/{username}")
+    public List<Plan> getAllPlanByUserName(@PathVariable("username")String username){
+        return planService.getAllPlanByUserName(username);
+    }
+
+    //发布计划
+    @PostMapping("/plan")
+    public Map<String,String> releasePlan(Plan plan){
+        Map<String,String> result = new HashMap<>();
+        if(!PLAN_TYPE.contains(plan.getPtype())){
+            result.put("code","405");
+            return result;
+        }
+
+        if(planService.releasePlan(plan)){
+            result.put("code","200");
+        }else {
+            result.put("code","405");
+        }
+
+        return result;
+    }
+
+}
