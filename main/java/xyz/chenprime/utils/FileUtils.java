@@ -20,7 +20,7 @@ public class FileUtils {
     public static String upload(MultipartFile file,String filename){
         if(!file.isEmpty()){    //文件不是空的
             try{
-                file.transferTo(new File("D:\\springBootUpload\\"+filename));
+                file.transferTo(new File("/springbootUPLOAD/"+filename));
             }catch (IOException e){
                 return "408";
             }
