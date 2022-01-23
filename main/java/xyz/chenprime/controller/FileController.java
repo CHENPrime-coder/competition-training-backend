@@ -26,7 +26,7 @@ public class FileController {
         AppFile file = new AppFile();
         file.setOldname(filebody.getOriginalFilename());
         file.setName(filename);
-        file.setUrl("D:\\springBootUpload\\"+filename);
+        file.setUrl("/springbootUPLOAD/"+filename);
         file.setType(filebody.getContentType());
         if(FileUtils.upload(filebody,filename).equals("200")){//上传成功
             if(service.addFile(file)){
