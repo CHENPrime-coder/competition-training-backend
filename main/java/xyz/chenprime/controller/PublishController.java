@@ -1,10 +1,7 @@
 package xyz.chenprime.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import xyz.chenprime.pojo.Daily;
 import xyz.chenprime.pojo.Plan;
 import xyz.chenprime.service.DailyService;
@@ -16,6 +13,7 @@ import java.util.*;
 /**
  * 本控制器讲实现日报，计划相关接口
  */
+@CrossOrigin
 @RestController
 public class PublishController {
 

@@ -1,19 +1,17 @@
 package xyz.chenprime.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import xyz.chenprime.pojo.User;
 import xyz.chenprime.service.UserService;
 import xyz.chenprime.utils.JwtUtils;
 
 import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.Map;
 
+@CrossOrigin
 @RestController
 public class AccessController {
 
