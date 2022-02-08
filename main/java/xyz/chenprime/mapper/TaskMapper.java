@@ -1,6 +1,5 @@
 package xyz.chenprime.mapper;
 
-import lombok.Data;
 import org.apache.ibatis.annotations.*;
 import xyz.chenprime.pojo.Task;
 
