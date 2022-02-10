@@ -10,6 +10,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.util.Arrays;
 
 public class UserLoginInterceptor implements HandlerInterceptor {
     /**
@@ -20,6 +21,7 @@ public class UserLoginInterceptor implements HandlerInterceptor {
         HttpSession session = request.getSession();
         Cookie[] cookies = request.getCookies();
         if (cookies==null){
+            System.out.println("拦截无token");
             session.setAttribute("code","401");
             return false;
         }
@@ -30,6 +32,7 @@ public class UserLoginInterceptor implements HandlerInterceptor {
                     return true;
                 }else {
                     session.setAttribute("code","401");
+                    System.out.println("拦截无token"+ Arrays.toString(cookies));
                     return false;
                 }
             }

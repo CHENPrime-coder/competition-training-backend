@@ -3,6 +3,8 @@ package xyz.chenprime.pojo;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
+import java.util.Date;
+
 @Data
 @TableName("plans")
 public class Plan { //计划
@@ -11,4 +13,5 @@ public class Plan { //计划
     private String pbody;
     private String ptype;
     private String planner;
+    private Date pdate;
 }

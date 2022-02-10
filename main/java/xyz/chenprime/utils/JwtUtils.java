@@ -84,11 +84,11 @@ public class JwtUtils {
     public static String getTokenMessage(String key,String token){
         Map<String,Claim> claims = verifyToken(token);
         Claim value = claims != null ? claims.get(key) : null;
-        if(null==value|| !StringUtils.hasLength(value.asString())){
+        if(null==value){
             //验证异常
             throw new BadTokenException();
         }
-        return value.asString();
+        return String.valueOf(value);
     }
 
 }

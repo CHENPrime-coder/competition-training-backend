@@ -13,7 +13,6 @@ import java.util.*;
 /**
  * 本控制器讲实现日报，计划相关接口
  */
-@CrossOrigin
 @RestController
 public class PublishController {
 

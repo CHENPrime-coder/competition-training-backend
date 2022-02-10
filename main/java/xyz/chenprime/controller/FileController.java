@@ -11,7 +11,6 @@ import xyz.chenprime.utils.FileUtils;
 import java.util.HashMap;
 import java.util.Map;
 
-@CrossOrigin
 @RestController
 @Slf4j
 public class FileController {

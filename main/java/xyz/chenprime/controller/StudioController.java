@@ -12,7 +12,6 @@ import java.util.Map;
 /**
  * 工作室无法手动创建，需要导入用户的同时创建。所以不需要创建接口
  */
-@CrossOrigin
 @RestController
 public class StudioController {
 

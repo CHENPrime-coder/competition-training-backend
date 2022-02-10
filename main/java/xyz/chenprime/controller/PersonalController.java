@@ -14,15 +14,23 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@CrossOrigin
 @RestController
 public class PersonalController {
 
     @Autowired
     PersonlService service;
 
+    @GetMapping("/personal")
+    public Personal getinfo(@CookieValue("token") String token){
+        String uid = JwtUtils.getTokenMessage("uid",token);
+        Long myUid = Long.parseLong(uid);
+        System.out.println(myUid);
+        System.out.println(service.getPersonal(myUid));
+        return service.getPersonal(myUid);
+    }
+
     @GetMapping("/personal/{uid}")
-    public Personal getinfo(@PathVariable("uid") Long uid){
+    public Personal getinfoByUid(@PathVariable("uid") Long uid){
         return service.getPersonal(uid);
     }
 
