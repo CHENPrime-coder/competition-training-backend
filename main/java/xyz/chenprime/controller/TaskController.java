@@ -7,6 +7,7 @@ import xyz.chenprime.pojo.Task;
 import xyz.chenprime.service.TaskService;
 import xyz.chenprime.utils.JwtUtils;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -26,7 +27,7 @@ public class TaskController {
     @PostMapping("/task")
     public Map<String,String> publishTask(Task task, @CookieValue("token")String token){
         Map<String,String> result = new HashMap<>();
-        if(JwtUtils.getTokenMessage("role",token).equals("学生")){
+        if(JwtUtils.getTokenMessage("role",token).equals("\"学生\"")){
             //权限不足
             result.put("code","403");
         }else {
@@ -52,10 +53,12 @@ public class TaskController {
     }
 
     @PutMapping("/task")
-    public Map<String,String> updateProgress(@RequestParam("progress") String progress,@RequestParam("tid")Long tid,
-                                             @CookieValue("token") String token){
+    public Map<String,String> updateProgress(@RequestParam("progress") String progress, @RequestParam("tid")Long tid,
+                                             @CookieValue("token") String token,
+                                             HttpServletResponse response){
         Map<String,String> result = new HashMap<>();
-        if(JwtUtils.getTokenMessage("role",token).equals("老师")){
+        System.out.println(JwtUtils.getTokenMessage("role",token)+"请求跟新进度");
+        if(JwtUtils.getTokenMessage("role",token).equals("\"老师\"")){
             result.put("code","403");
         }else {
             if(service.updateTaskProgress(progress,tid)){
@@ -64,13 +67,17 @@ public class TaskController {
                 result.put("code","406");
             }
         }
+//        response.addHeader("Access-Control-Allow-Origin","*");
         return result;
     }
 
+    @CrossOrigin
     @DeleteMapping("/task")
-    public Map<String,String> deleteTask(@RequestParam("tid")Long tid,@CookieValue("token")String token){
+    public Map<String,String> deleteTask(@RequestParam("tid")Long tid,
+                                         @CookieValue("token")String token,
+                                         HttpServletResponse response){
         Map<String,String> result = new HashMap<>();
-        if(JwtUtils.getTokenMessage("role",token).equals("学生")){
+        if(JwtUtils.getTokenMessage("role",token).equals("\"学生\"")){
             result.put("code","403");
         }else {
             if(service.deleteTask(tid)){
@@ -79,6 +86,7 @@ public class TaskController {
                 result.put("code","407");
             }
         }
+//        response.addHeader("Access-Control-Allow-Origin","*");
         return result;
     }
 

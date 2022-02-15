@@ -7,4 +7,5 @@ public class Personal {
     private String username;
     private String headiconURL;
     private String sname;
+    private Long uid;
 }

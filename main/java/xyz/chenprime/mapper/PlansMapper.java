@@ -17,4 +17,7 @@ public interface PlansMapper {
             "(#{pname},#{pbody},#{ptype},#{planner})")
     int releasePlan(Plan plan);
 
+    @Select("select * from plans")
+    List<Plan> getAllPlans();
+
 }

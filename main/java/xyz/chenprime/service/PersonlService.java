@@ -27,4 +27,12 @@ public class PersonlService {
         return mapper.addPFM(performance)!=0;
     }
 
+    public boolean updatUserHeadImg(String newfilename,Long uid){
+        return mapper.updateUserHeadImg(newfilename,uid)!=0;
+    }
+
+    public Personal getPersonalByName(String username){
+        return mapper.getPersonalByName(username);
+    }
+
 }

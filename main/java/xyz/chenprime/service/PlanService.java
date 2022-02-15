@@ -22,4 +22,8 @@ public class PlanService {
         return mapper.releasePlan(plan)!=0;
     }
 
+    public List<Plan> getAllPlans(){
+        return mapper.getAllPlans();
+    }
+
 }

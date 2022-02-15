@@ -43,4 +43,8 @@ public class StudioService {
         return result;
     }
 
+    public Studio getStudioBySid(Long sid){
+        return mapper.getStudioBySid(sid);
+    }
+
 }

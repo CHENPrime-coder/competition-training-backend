@@ -19,16 +19,16 @@ public class AdminWebConfig implements WebMvcConfigurer {
                 .excludePathPatterns("/login","/reg");
     }
 
+    /**
+     * 所有请求都允许跨域，使用这种配置就不需要
+     * 在interceptor中配置header了
+     */
     @Override
     public void addCorsMappings(CorsRegistry corsRegistry) {
-        /**
-         * 所有请求都允许跨域，使用这种配置就不需要
-         * 在interceptor中配置header了
-         */
         corsRegistry.addMapping("/**")
                 .allowCredentials(true)
                 .allowedOrigins("http://localhost:8080/")
-                .allowedMethods("POST", "GET", "PUT", "OPTIONS", "DELETE")
+                .allowedMethods("GET", "HEAD", "POST", "PUT", "DELETE", "OPTIONS")
                 .allowedHeaders("*")
                 .maxAge(3600);
     }

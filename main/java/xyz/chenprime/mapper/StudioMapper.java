@@ -16,4 +16,7 @@ public interface StudioMapper {
     @Update("update studios set sheadicon=#{filename} where sname=#{sname}")
     int updateIcon(String filename,String sname);
 
+    @Select("select * from studios where sid=#{sid}")
+    Studio getStudioBySid(Long sid);
+
 }

@@ -10,6 +10,7 @@ import xyz.chenprime.service.PersonlService;
 import xyz.chenprime.utils.JwtUtils;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,14 +25,17 @@ public class PersonalController {
     public Personal getinfo(@CookieValue("token") String token){
         String uid = JwtUtils.getTokenMessage("uid",token);
         Long myUid = Long.parseLong(uid);
-        System.out.println(myUid);
-        System.out.println(service.getPersonal(myUid));
         return service.getPersonal(myUid);
     }
 
     @GetMapping("/personal/{uid}")
     public Personal getinfoByUid(@PathVariable("uid") Long uid){
         return service.getPersonal(uid);
+    }
+
+    @GetMapping("/personalname/{username}")
+    public Personal getinfoByUserName(@PathVariable("username") String username){
+        return service.getPersonalByName(username);
     }
 
     @PostMapping("/pfm")
@@ -54,6 +58,27 @@ public class PersonalController {
     @GetMapping("/pfm/{uid}")
     public List<Performance> getAllPerformanceByUid(@PathVariable("uid")Long uid){
         return service.getAllPerformanceByUid(uid);
+    }
+
+    @PostMapping("/userimg")
+    public Map<String,String> changeUserHeadImg(@RequestParam("filename")String filename,
+                                                @CookieValue("token")String token){
+        Map<String,String> result = new HashMap<>();
+        Long uid = Long.parseLong(JwtUtils.getTokenMessage("uid",token));
+        //修改名字
+        Date date = new Date();
+        long time = date.getTime();
+        int i = filename.lastIndexOf('.');
+        String perfix = filename.substring(0,i);
+        String surfix = filename.substring(i);
+        filename = perfix+time+surfix;
+        if(service.updatUserHeadImg(filename,uid)){
+            result.put("code","200");
+            result.put("filename",filename);
+        }else {
+            result.put("code","406");
+        }
+        return result;
     }
 
 }

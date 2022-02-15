@@ -9,4 +9,9 @@ spring:
       max-file-size: 50MB       #单个文件上传最大50MB
       max-request-size: 100MB   #并发上传大小限制为100MB
 server:
-  port: 8080
+  port: 443
+  ssl:
+    key-store: classpath:springboot.p12
+    key-store-password: 200573Cjj
+    key-store-type: PKCS12
+    key-alias: springboot

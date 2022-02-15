@@ -22,7 +22,6 @@ public class FileController {
     public Map<String,String> uploadFile(@RequestPart("filebody")MultipartFile filebody,
                                          @RequestParam("filename")String filename){
         Map<String,String> result = new HashMap<>();
-
         AppFile file = new AppFile();
         file.setOldname(filebody.getOriginalFilename());
         file.setName(filename);

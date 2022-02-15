@@ -23,6 +23,11 @@ public class StudioController {
         return service.getAllStudio();
     }
 
+    @GetMapping("/studio/{sid}")
+    public Studio getStudioBySid(@PathVariable("sid")Long sid){
+        return service.getStudioBySid(sid);
+    }
+
     @PostMapping("/studio")
     public Map<String,String> updateIcon(@RequestParam("filename")String filename,
                                          @RequestParam("sname")String sname){

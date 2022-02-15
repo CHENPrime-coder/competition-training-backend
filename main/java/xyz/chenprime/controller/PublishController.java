@@ -6,6 +6,7 @@ import xyz.chenprime.pojo.Daily;
 import xyz.chenprime.pojo.Plan;
 import xyz.chenprime.service.DailyService;
 import xyz.chenprime.service.PlanService;
+import xyz.chenprime.utils.JwtUtils;
 
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -38,9 +39,11 @@ public class PublishController {
 
     //发布日报
     @PostMapping("/daily")
-    public Map<String,String> publishDaily(Daily daily){
+    public Map<String,String> publishDaily(Daily daily,
+                                           @CookieValue("token")String token){
         Map<String,String> result = new HashMap<>();
-
+        String dname = JwtUtils.getTokenMessage("username",token);
+        daily.setReporter(dname.substring(1,dname.length()-1));
         if(dailyService.reportDaily(daily)){
             result.put("code","200");
         }else {
@@ -65,8 +68,11 @@ public class PublishController {
 
     //发布计划
     @PostMapping("/plan")
-    public Map<String,String> releasePlan(Plan plan){
+    public Map<String,String> releasePlan(Plan plan,
+                                          @CookieValue("token")String token){
         Map<String,String> result = new HashMap<>();
+        String pname = JwtUtils.getTokenMessage("username", token);
+        plan.setPlanner(pname.substring(1,pname.length()-1));
         if(!PLAN_TYPE.contains(plan.getPtype())){
             result.put("code","405");
             return result;
@@ -79,6 +85,11 @@ public class PublishController {
         }
 
         return result;
+    }
+
+    @GetMapping("/plan")
+    public List<Plan> getAllPlans(){
+        return planService.getAllPlans();
     }
 
 }

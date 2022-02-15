@@ -49,4 +49,8 @@ public class UserService {
         mapper.createStudio(sname);
     }
 
+    public List<User> getAllUserByRole(String role){
+        return mapper.getAllUserByRole(role);
+    }
+
 }
