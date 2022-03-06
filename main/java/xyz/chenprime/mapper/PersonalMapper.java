@@ -36,4 +36,7 @@ public interface PersonalMapper {
             "WHERE u.`username`=#{username};")
     Personal getPersonalByName(String username);
 
+    @Select("select * from users where username=#{username}")
+    String getRole(String username);
+
 }

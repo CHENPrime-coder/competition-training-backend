@@ -20,6 +20,9 @@ public class UserLoginInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         HttpSession session = request.getSession();
         Cookie[] cookies = request.getCookies();
+//        for(Cookie cookie : cookies){
+//            System.out.println(cookie);
+//        }
         if (cookies==null){
             System.out.println("拦截无token");
             session.setAttribute("code","401");

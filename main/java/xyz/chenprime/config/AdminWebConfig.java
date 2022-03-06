@@ -27,7 +27,8 @@ public class AdminWebConfig implements WebMvcConfigurer {
     public void addCorsMappings(CorsRegistry corsRegistry) {
         corsRegistry.addMapping("/**")
                 .allowCredentials(true)
-                .allowedOrigins("http://localhost:8080/")
+                .allowedOrigins("https://1.117.145.48")
+                .allowedOrigins("http://1.117.145.48")
                 .allowedMethods("GET", "HEAD", "POST", "PUT", "DELETE", "OPTIONS")
                 .allowedHeaders("*")
                 .maxAge(3600);

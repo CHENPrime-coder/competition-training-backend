@@ -35,4 +35,8 @@ public class PersonlService {
         return mapper.getPersonalByName(username);
     }
 
+    public String getRole(String username){
+        return mapper.getRole(username);
+    }
+
 }

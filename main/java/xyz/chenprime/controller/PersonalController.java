@@ -42,7 +42,7 @@ public class PersonalController {
     public Map<String,String> uploadPerformance(Performance pfm,
                                                 @CookieValue("token")String token){
         Map<String,String> result = new HashMap<>();
-        if(JwtUtils.getTokenMessage("role",token).equals("学生")){
+        if(JwtUtils.getTokenMessage("role",token).equals("\"学生\"")){
             result.put("code","403");
             return result;
         }
@@ -78,6 +78,18 @@ public class PersonalController {
         }else {
             result.put("code","406");
         }
+        return result;
+    }
+
+    @GetMapping("/getRole/{username}")
+    public Map<String,String> getRole(@PathVariable("username")String username){
+        Map<String,String> result = new HashMap<>();
+        if(service.getRole(username).equals("\"老师\"")){
+            result.put("role","老师");
+        }else {
+            result.put("role","学生");
+        }
+        result.put("code","200");
         return result;
     }
 
