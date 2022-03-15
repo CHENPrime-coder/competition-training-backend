@@ -2,7 +2,9 @@ package xyz.chenprime.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import xyz.chenprime.mapper.ProgressMapper;
 import xyz.chenprime.mapper.TaskMapper;
+import xyz.chenprime.pojo.Progress;
 import xyz.chenprime.pojo.Task;
 
 import java.util.Date;
@@ -15,6 +17,9 @@ public class TaskService {
 
     @Autowired
     TaskMapper mapper;
+
+    @Autowired
+    ProgressMapper progressMapper;
 
     public List<Task> getAllTasks(){
         return mapper.getAllTasks();
@@ -52,12 +57,30 @@ public class TaskService {
         return result;
     }
 
-    public boolean updateTaskProgress(String progress,Long tid){
-        return mapper.updateTaskProgress(progress,tid)!=0;
+    /**
+     * 更新任务进度，包含明细
+     * @param progress 每次更新的记录
+     * @param newPro 任务总进度
+     * @return true为更新成功
+     */
+    public boolean updateTaskProgress(Progress progress,String newPro){
+        return mapper.updateTaskProgress(newPro,progress.getTid())!=0 &&
+                progressMapper.UpdateProgress(progress)!=0;
     }
 
+
+    /**
+     * 删除任务，并删除相关的任务明细
+     * @param tid 任务id
+     * @return 返回true就是删除成功了
+     */
     public boolean deleteTask(Long tid){
-        return mapper.deleteTask(tid)!=0;
+        return mapper.deleteTask(tid)!=0 &&
+                progressMapper.DeleteProgressByTid(tid)!=0;
+    }
+
+    public List<Progress> getAllProgressByTid(Long tid){
+        return progressMapper.getAllDetailsProgressByTid(tid);
     }
 
 }

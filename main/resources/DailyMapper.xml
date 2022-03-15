@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xyz.chenprime.mapper.DailyMapper">
+    <select id="getAllNoPunchPersonal" parameterType="map" resultType="xyz.chenprime.pojo.Personal">
+        SELECT u.username AS username,f.url AS headiconURL,s.sname AS sname,u.`uid` as uid,u.`role` as role FROM users AS u
+            INNER JOIN relation AS r ON r.`uid`=u.`uid`
+            INNER JOIN files AS f ON f.`name`=u.`headicon`
+            INNER JOIN studios AS s ON r.`sid`=s.`sid`
+            <where>
+                <if test="nameList != null">
+                    u.`username` not in
+                    <foreach collection="nameList" item="name" open="(" close=")" separator=",">
+                        #{name}
+                    </foreach>
+                </if>
+            </where>
+
+    </select>
+</mapper>

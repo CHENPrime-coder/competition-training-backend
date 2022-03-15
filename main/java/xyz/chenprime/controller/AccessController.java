@@ -30,9 +30,10 @@ public class AccessController {
                 result.put("code","200");
                 ResponseCookie responseCookie = ResponseCookie.from("token",token)
                         .httpOnly(true)
-                        .secure(true)
-                        .path("/")
-                        .sameSite("None")
+//                        跨域
+//                        .secure(true)
+//                        .path("/")
+//                        .sameSite("None")
                         .build();
                 response.setHeader(HttpHeaders.SET_COOKIE, responseCookie.toString());
             } catch (Exception e) {

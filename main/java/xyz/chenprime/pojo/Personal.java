@@ -8,4 +8,5 @@ public class Personal {
     private String headiconURL;
     private String sname;
     private Long uid;
+    private String role;
 }

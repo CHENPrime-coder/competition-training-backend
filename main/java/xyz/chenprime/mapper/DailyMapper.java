@@ -4,8 +4,10 @@ import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import xyz.chenprime.pojo.Daily;
+import xyz.chenprime.pojo.Personal;
 
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface DailyMapper {
@@ -19,5 +21,7 @@ public interface DailyMapper {
         @Insert("insert into daily(dname, reporter, dbody) values " +
             "(#{dname},#{reporter},#{dbody})")
     int reportDaily(Daily daily);
+
+    List<Personal> getAllNoPunchPersonal(Map<String,List<String>> map);
 
 }

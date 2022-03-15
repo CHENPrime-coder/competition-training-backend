@@ -8,10 +8,16 @@ spring:
     multipart:
       max-file-size: 50MB       #单个文件上传最大50MB
       max-request-size: 100MB   #并发上传大小限制为100MB
-server:
-  port: 453
-  ssl:
-    key-store: classpath:springboot.p12
-    key-store-password: 200573Cjj
-    key-store-type: PKCS12
-    key-alias: springboot
+  redis:
+    port: 6379
+    host: 127.0.0.1
+    timeout: 1000
+#server:
+#  port: 453
+#  ssl:
+#    key-store: classpath:springboot.p12
+#    key-store-password: 200573Cjj
+#    key-store-type: PKCS12
+#    key-alias: springboot
+mybatis-plus:
+  mapper-locations: classpath:*.xml

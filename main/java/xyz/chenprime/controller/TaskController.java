@@ -3,6 +3,7 @@ package xyz.chenprime.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import xyz.chenprime.pojo.Progress;
 import xyz.chenprime.pojo.Task;
 import xyz.chenprime.service.TaskService;
 import xyz.chenprime.utils.JwtUtils;
@@ -53,22 +54,26 @@ public class TaskController {
     }
 
     @PutMapping("/task")
-    public Map<String,String> updateProgress(@RequestParam("progress") String progress, @RequestParam("tid")Long tid,
+    public Map<String,String> updateProgress(Progress progress,
+                                             @RequestParam("newPro")String newPro,
                                              @CookieValue("token") String token,
                                              HttpServletResponse response){
         Map<String,String> result = new HashMap<>();
-        System.out.println(JwtUtils.getTokenMessage("role",token)+"请求跟新进度");
         if(JwtUtils.getTokenMessage("role",token).equals("\"老师\"")){
             result.put("code","403");
         }else {
-            if(service.updateTaskProgress(progress,tid)){
+            if(service.updateTaskProgress(progress, newPro)){
                 result.put("code","200");
             }else {
                 result.put("code","406");
             }
         }
-//        response.addHeader("Access-Control-Allow-Origin","*");
         return result;
+    }
+
+    @GetMapping("/progress")
+    public List<Progress> getAllProgress(@RequestParam("tid") Long tid){
+        return service.getAllProgressByTid(tid);
     }
 
     @CrossOrigin
@@ -86,7 +91,6 @@ public class TaskController {
                 result.put("code","407");
             }
         }
-//        response.addHeader("Access-Control-Allow-Origin","*");
         return result;
     }
 

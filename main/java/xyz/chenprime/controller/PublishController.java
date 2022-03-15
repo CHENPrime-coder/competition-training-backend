@@ -2,13 +2,16 @@ package xyz.chenprime.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import xyz.chenprime.mapper.DailyMapper;
 import xyz.chenprime.pojo.Daily;
+import xyz.chenprime.pojo.Personal;
 import xyz.chenprime.pojo.Plan;
 import xyz.chenprime.service.DailyService;
 import xyz.chenprime.service.PlanService;
+import xyz.chenprime.service.RedisService;
 import xyz.chenprime.utils.JwtUtils;
 
-import java.text.SimpleDateFormat;
+import javax.servlet.http.Cookie;
 import java.util.*;
 
 /**
@@ -21,6 +24,12 @@ public class PublishController {
 
     @Autowired
     DailyService dailyService;
+
+    @Autowired
+    DailyMapper mapper;
+
+    @Autowired
+    RedisService redisService;
 
     /**
      * 日报
@@ -44,6 +53,10 @@ public class PublishController {
         Map<String,String> result = new HashMap<>();
         String dname = JwtUtils.getTokenMessage("username",token);
         daily.setReporter(dname.substring(1,dname.length()-1));
+
+        redisService.dailyClockIn(daily.getReporter());
+        redisService.PublishRecordWithType("daily",daily.getReporter(),daily.getDdate().toString().substring(0,10));
+
         if(dailyService.reportDaily(daily)){
             result.put("code","200");
         }else {
@@ -51,6 +64,18 @@ public class PublishController {
         }
 
         return result;
+    }
+
+    //获取所有昨天没有打卡人用户
+    @GetMapping("/nopunch")
+    public List<Personal> getNoPunch(){
+        List<String> punchUsernames = redisService.getAllPunchUsernames();
+        //        如果长度为0就是null
+        punchUsernames = punchUsernames.size() == 0 ? null : punchUsernames;
+        Map<String,List<String>> map = new HashMap<>();
+        map.put("nameList",punchUsernames);
+
+        return mapper.getAllNoPunchPersonal(map);
     }
 
     /**
@@ -71,6 +96,9 @@ public class PublishController {
     public Map<String,String> releasePlan(Plan plan,
                                           @CookieValue("token")String token){
         Map<String,String> result = new HashMap<>();
+
+        redisService.PublishRecordWithType(plan.getPtype(),plan.getPlanner(),plan.getPdate().toString().substring(0,10));
+
         String pname = JwtUtils.getTokenMessage("username", token);
         plan.setPlanner(pname.substring(1,pname.length()-1));
         if(!PLAN_TYPE.contains(plan.getPtype())){
@@ -90,6 +118,17 @@ public class PublishController {
     @GetMapping("/plan")
     public List<Plan> getAllPlans(){
         return planService.getAllPlans();
+    }
+
+    /**
+     * 获取发布信息，分布
+     */
+    @GetMapping("/publish")
+    public Map<String,String> getAllPublishInfo(@CookieValue("token")String token,
+                                        @RequestParam("yyyyMM") String yyyyMM ){
+        String username = JwtUtils.getTokenMessage("username", token);
+
+        return redisService.getAllPublishInfoByYearAndMonth(yyyyMM,username);
     }
 
 }

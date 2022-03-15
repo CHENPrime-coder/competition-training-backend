@@ -30,7 +30,9 @@ public class PersonalController {
 
     @GetMapping("/personal/{uid}")
     public Personal getinfoByUid(@PathVariable("uid") Long uid){
-        return service.getPersonal(uid);
+        Personal personal = service.getPersonal(uid);
+        System.out.println(personal.toString());
+        return personal;
     }
 
     @GetMapping("/personalname/{username}")
@@ -84,10 +86,12 @@ public class PersonalController {
     @GetMapping("/getRole/{username}")
     public Map<String,String> getRole(@PathVariable("username")String username){
         Map<String,String> result = new HashMap<>();
-        if(service.getRole(username).equals("\"老师\"")){
-            result.put("role","老师");
-        }else {
+        String role = service.getRole(username);
+        System.out.println(role);
+        if(role.equals("学生")){
             result.put("role","学生");
+        }else {
+            result.put("role","老师");
         }
         result.put("code","200");
         return result;

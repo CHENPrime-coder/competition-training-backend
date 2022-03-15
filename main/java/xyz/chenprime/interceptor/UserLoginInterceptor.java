@@ -40,6 +40,7 @@ public class UserLoginInterceptor implements HandlerInterceptor {
                 }
             }
         }
+        System.out.println(Arrays.toString(cookies));
         session.setAttribute("code","401");
         return false;
     }
