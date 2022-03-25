@@ -1,37 +1,22 @@
-## Welcome to GitHub Pages
+# 高中的第一个项目
+## 1.项目介绍
 
-You can use the [editor on GitHub](https://github.com/CHENPrime-coder/competition-training-PLANB/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
+  这个项目是我在高中的时候写的第一个项目，需求文档是老师给的。但是自己也加了一点东西，包括了redis Swagger JWTtoken等等的技术
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+## 2.项目主要功能
+  
+  这个项目主要是实现了一些任务发布，工作室（相当于班级）管理的功能。可以发布任务，日报，计划。老师可以发布任务，管理工作室。学生可以发布日报，发布计划。
+  因为本项目还使用了redis，所以还有一些昨日未打卡统计，每月发布的信息分布。
 
-### Markdown
+  这个项目只是后端，在我的github账户下还有一个使用vue实现的配套web端应用。当然，那个vue项目现在还不完善，毕竟只有一个人，忙不过来。
+  
+  现在呢，我还在写一个由Flutter实现的安卓端项目，我还没上传github。
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+## 3.部署
 
-```markdown
-Syntax highlighted code block
+  后端需要部署在linux上，这里推荐使用centos7。在`/`目录创建一个文件夹`springbootUPLAOD`，用于后端上传文件的路径。
+  当然还需要由mysql的环境，需要使用指定的表结构，项目中的.sql文件会上传。
+  mysql需要在3306端口，密码需要是200573Cjj。当然也可以改。
+  
+  这个后端还使用了https，所以还需要由对应的秘钥文件.p12
 
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
-```
-
-For more details see [Basic writing and formatting syntax](https://docs.github.com/en/github/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/CHENPrime-coder/competition-training-PLANB/settings/pages). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://support.github.com/contact) and we’ll help you sort it out.
